@@ -1,6 +1,8 @@
 from discord.ext import commands
 import json
 import os
+import nltk
+from lib2to3.pgen2.tokenize import tokenize
 import translators as translate
 
 if os.path.exists(os.getcwd() + "/config.json"):
@@ -22,6 +24,11 @@ class translator(commands.Cog):
     def __init__(self,bot): 
         self.bot = bot
 
+    @commands.command(name= "test")
+    async def test(self,ctx,*,message):
+        puncts = nltk.tokenize.wordpunct_tokenize(message)  
+        return await ctx.send(puncts)
+
     @commands.command(name='terminate')
     async def terminate(self, ctx):
         await ctx.send('Goodbye')
@@ -35,11 +42,15 @@ class translator(commands.Cog):
     async def echo(self, ctx, *, message):
         return await ctx.send(message)
    
-    @commands.command(name='translate')
-    async def translate(self, ctx, *, message):
-        text_translated = translate.google(message)
-        await ctx.send(text_translated)
-
+    @commands.command(name='translate', alias = 'tl')
+    async def translate(self,ctx,*,message):
+        puncts = nltk.tokenize.wordpunct_tokenize(message)  
+        eng = []
+        outString = ""
+        eng.append(translate.google(str(puncts)))
+        for word in eng:
+            outString +=  " " + word
+        return await ctx.send(str(outString))
 
 token  = configData["token"]
 def setup(bot):
