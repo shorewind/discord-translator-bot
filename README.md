@@ -1,1 +1,3 @@
-# ACM-Hackathon-2022
+# UAH ACM Hackathon 2022
+
+Translator Discord Bot
