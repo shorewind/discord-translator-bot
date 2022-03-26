@@ -33,11 +33,6 @@ class translator(commands.Cog):
         puncts = nltk.tokenize.wordpunct_tokenize(message)  
         return await ctx.send(puncts)
 
-    @commands.command(name='terminate')
-    async def terminate(self, ctx):
-        await ctx.send('Goodbye')
-        await bot.logout()
-
     @commands.command(name='hello')
     async def test(self,ctx):
         return await ctx.send("Hello, world!")
@@ -47,18 +42,20 @@ class translator(commands.Cog):
         return await ctx.send(message)
    
     @commands.command(name='translate', aliases = ['tl', 'Tl', 'tL', 'TL'])
-    async def translate(self,ctx,*,message):
-        eng =(translate.google(message))
-        return await ctx.send(eng)
+    async def translate(self, ctx, from_language, to_language, *, message):
+        translated_message = translate.google(message, str(from_language), str(to_language))
+        return await ctx.send(translated_message)
 
     @commands.command(name = 'TranslateTTs', aliases = ['tltts'])
     async def translateTTS(self,ctx, *, message):
-         eng =(translate.google(message))
-         return await ctx.send(eng, tts=True)
+         translated_message =(translate.google(message))
+         return await ctx.send(translated_message, tts=True)
 
     @commands.command(name = 'countryGuide', aliases = ['cg', 'cG', 'Cg'])
     async def countryGuide(self, ctx):
         return await ctx.send("")
+    
+    
 token  = configData["token"]
 def setup(bot):
     bot.add_cog(translator(bot))
