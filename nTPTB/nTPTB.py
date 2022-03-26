@@ -1,6 +1,4 @@
-import discord
 from discord.ext import commands
-import nltk 
 import json
 import os
 
@@ -12,18 +10,19 @@ else:
     with open(os.getcwd() + "/config.json","w+") as f:
         json.dump(configTemplate,f)
 
-client = discord.Client()
 bot = commands.Bot(command_prefix='$')
 
+@bot.event
+async def on_ready():
+    print(f'{bot.user} has connected to Discord!')
 
 class translator(commands.Cog):
     def __init__(self,bot): 
         self.bot = bot
- 
-    @commands.command(name='test')
+
+    @commands.command(name='hello')
     async def test(self,ctx):
         return await ctx.send("Hello, world!")
-
 
 token  = configData["token"]
 def setup(bot):
