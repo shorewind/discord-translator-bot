@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import json
 import os
@@ -17,14 +18,16 @@ bot = commands.Bot(command_prefix='$', help_command=None)
 
 @bot.event
 async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='$ commands'))
+    print(f'{bot.user} is online!')
 
 
 class translator(commands.Cog):
     def __init__(self,bot): 
+        self.bot = bot
         global langDict
         self.bot = bot
-         file = open('languages.txt','r')
+        file = open('languages.txt','r')
         langDict = {}
         f = file.readlines()
         for line in f:
@@ -55,21 +58,23 @@ class translator(commands.Cog):
         file = open("languages.txt", 'r')
         await ctx.send(file.read())
         file.close()
-    @commands.command(name = 'languageSearch', aliases = ['ls', 'Ls', 'lS', 'LS'])
+
+    @commands.command(name = 'languageSearch', aliases = ['ls', 'searchlanguage', 'search', 'abbreviation'])
     async def languageSearch(self,ctx,*,language):
         return await ctx.send(langDict[language.lower()])
-    
+
     @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands'])
     async def helper(self, ctx, to_language='en'):
-        help_title = '**Command Guide**\n'
+        help_title = '**Command Guide**\nNote: Languages must be in abbreviated form.\n'
         help_translate = '__ Translate __\n$tl|tr [from language] [to language] [message]\n'
         help_translatetts = '__ Text-to-Speech __\n$tltts [from language] [to language] [message]\n'
-        help_languageguide = '__ Language Guide __\n$lg '
-        help_message = help_title + help_translate + help_translatetts + help_languageguide
+        help_languageguide = '__ Language Guide __\n$lg\n'
+        help_languagesearch = '__ Language Abbrevation Search __\n$ls [language]'
+        help_message = help_title + help_translate + help_translatetts + help_languageguide + help_languagesearch
         translated_help_message = translate.google(help_message, 'en', str(to_language))
         translated_help_message = translated_help_message.lower()
         return await ctx.send(translated_help_message)
-    
+
 
 token  = configData["token"]
 def setup(bot):
