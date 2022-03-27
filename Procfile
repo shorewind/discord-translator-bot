@@ -1,1 +1,1 @@
-worker: nTPTB.py
+web: nTPTB.py
