@@ -1,1 +1,1 @@
-web :gunicorn nTPTB.py:app 
+worker nTPTB.py
