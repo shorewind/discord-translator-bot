@@ -1,4 +1,3 @@
-**Languages & Abbreviations**
 Afrikaans	af
 Albanian	sq
 Amharic	am
@@ -12,8 +11,8 @@ Bosnian	bs
 Bulgarian	bg
 Catalan	ca
 Cebuano	ceb 
-Chinese (Simplified)	zh-CN or zh 
-Chinese (Traditional)	zh-TW 
+Chinese 	zh-CN or zh 
+Chinese 	zh-TW 
 Corsican	co
 Croatian	hr
 Czech	cs
@@ -30,7 +29,7 @@ Georgian	ka
 German	de
 Greek	el
 Gujarati	gu
-Haitian Creole	ht
+Haitian 	ht
 Hausa	ha
 Hawaiian	haw 
 Hebrew	he or iw
@@ -63,25 +62,25 @@ Maltese	mt
 Maori	mi
 Marathi	mr
 Mongolian	mn
-Myanmar (Burmese)	my
+Myanmar 	my
 Nepali	ne
 Norwegian	no
-Nyanja (Chichewa)	ny
-Odia (Oriya)	or
+Nyanja 	ny
+Odia 	or
 Pashto	ps
 Persian	fa
 Polish	pl
-Portuguese (Portugal, Brazil)	pt
+Portuguese 	pt
 Punjabi	pa
 Romanian	ro
 Russian	ru
 Samoan	sm
-Scots Gaelic	gd
+Scots 	gd
 Serbian	sr
 Sesotho	st
 Shona	sn
 Sindhi	sd
-Sinhala (Sinhalese)	si
+Sinhala 	si
 Slovak	sk
 Slovenian	sl
 Somali	so
@@ -89,7 +88,7 @@ Spanish	es
 Sundanese	su
 Swahili	sw
 Swedish	sv
-Tagalog (Filipino)	tl
+Tagalog 	tl
 Tajik	tg
 Tamil	ta
 Tatar	tt
