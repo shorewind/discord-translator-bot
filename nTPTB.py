@@ -4,6 +4,7 @@ import json
 import os
 from lib2to3.pgen2.tokenize import tokenize
 import translators as translate
+import requests
 
 if os.path.exists(os.getcwd() + "/config.json"):
     with open(".\config.json") as f:
@@ -75,8 +76,8 @@ class translator(commands.Cog):
 
     @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands', 'info', 'about'])
     async def helper(self, ctx, to_language='en'):
-        help_title = '**Command Guide**\nNote: Languages must be in abbreviated form.\n'
-        help_translate = '__ Translate __\n$tl|tr <source language> <target language> <message>\n'
+        help_title = '** Command Guide **\n Note: Languages must be in abbreviated form.\n'
+        help_translate = '__ Translate __\n$[tl|tr] <source language> <target language> <message>\n'
         help_translatetts = '__ Text-to-Speech __\n$tltts <source language> <target language> <message>\n'
         help_languageguide = '__ Language Guide __\n$lg\n'
         help_languagesearch = '__ Language Abbrevation Search __\n$ls <target language>\n'
@@ -84,7 +85,13 @@ class translator(commands.Cog):
         help_message = help_title + help_translate + help_translatetts + help_languageguide + help_languagesearch + help_translatemessage
         translated_help_message = translate.google(help_message, 'en', str(to_language))
         translated_help_message = translated_help_message.lower()
-        return await ctx.send(translated_help_message)
+        lines = translated_help_message.splitlines()
+        final_message = ''
+        for line in lines:
+            if line[1] == ' ':
+                line = line.replace(line[1], '', 1)
+            final_message += line + '\n'
+        return await ctx.send(final_message)
 
 
 token  = configData["token"]
