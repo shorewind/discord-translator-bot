@@ -75,7 +75,6 @@ class translator(commands.Cog):
         translated_help_message = translated_help_message.lower()
         return await ctx.send(translated_help_message)
 
-
 token  = configData["token"]
 def setup(bot):
     bot.add_cog(translator(bot))
