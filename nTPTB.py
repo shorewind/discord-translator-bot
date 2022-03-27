@@ -17,7 +17,7 @@ bot = commands.Bot(command_prefix='$', help_command=None)
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='! commands'))
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='$ commands'))
     print(f'{bot.user} is online!')
 
 
