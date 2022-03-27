@@ -14,7 +14,7 @@ else:
     with open(os.getcwd() + "/config.json","w+") as f:
         json.dump(configTemplate,f)
 
-bot = commands.Bot(command_prefix='!', help_command=None)
+bot = commands.Bot(command_prefix='$', help_command=None)
 
 @bot.event
 async def on_ready():
