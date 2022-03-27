@@ -1,3 +1,5 @@
+**Languages & Abbreviations**
+_Automatic  auto_
 Afrikaans	af
 Albanian	sq
 Amharic	am
@@ -11,8 +13,9 @@ Bosnian	bs
 Bulgarian	bg
 Catalan	ca
 Cebuano	ceb 
-Chinese 	zh-CN or zh 
-Chinese 	zh-TW 
+Chinese     zh
+Chinese(Simplified) 	zh-CN
+Chinese(Traditional) 	zh-TW 
 Corsican	co
 Croatian	hr
 Czech	cs
