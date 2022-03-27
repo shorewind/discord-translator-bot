@@ -1,7 +1,6 @@
 from discord.ext import commands
 import json
 import os
-
 from lib2to3.pgen2.tokenize import tokenize
 import translators as translate
 
@@ -23,7 +22,15 @@ async def on_ready():
 
 class translator(commands.Cog):
     def __init__(self,bot): 
+        global langDict
         self.bot = bot
+         file = open('languages.txt','r')
+        langDict = {}
+        f = file.readlines()
+        for line in f:
+            words = line.split()
+            langDict[words[0].lower()] = words[1]
+        file.close()
 
     @commands.command(name='hello')
     async def test(self,ctx):
@@ -48,7 +55,10 @@ class translator(commands.Cog):
         file = open("languages.txt", 'r')
         await ctx.send(file.read())
         file.close()
-
+    @commands.command(name = 'languageSearch', aliases = ['ls', 'Ls', 'lS', 'LS'])
+    async def languageSearch(self,ctx,*,language):
+        return await ctx.send(langDict[language.lower()])
+    
     @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands'])
     async def helper(self, ctx, to_language='en'):
         help_title = '**Command Guide**\n'
@@ -59,7 +69,7 @@ class translator(commands.Cog):
         translated_help_message = translate.google(help_message, 'en', str(to_language))
         translated_help_message = translated_help_message.lower()
         return await ctx.send(translated_help_message)
-
+    
 
 token  = configData["token"]
 def setup(bot):
