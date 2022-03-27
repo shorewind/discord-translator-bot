@@ -5,7 +5,6 @@ import os
 from lib2to3.pgen2.tokenize import tokenize
 import translators as translate
 
-
 if os.path.exists(os.getcwd() + "/config.json"):
     with open(".\config.json") as f:
         configData = json.load(f)
@@ -52,6 +51,13 @@ class translator(commands.Cog):
     async def translateTTS(self,ctx, from_language, to_language, *, message):
          translated_message = translate.google(message, str(from_language), str(to_language))
          return await ctx.send(translated_message, tts=True)
+    
+    @commands.command(name='translateMessage', aliases=['tm', 'translatemessage'])
+    async def reply(self, ctx, to_language): 
+        message = await ctx.channel.fetch_message(ctx.message.reference.message_id)
+        message = message.content
+        translated_message = translate.google(message, 'auto', str(to_language))
+        await ctx.send(translated_message)
 
     @commands.command(name = 'languageGuide', aliases = ['lg', 'languageguide','languages'])
     async def countryGuide(self, ctx):
@@ -61,19 +67,25 @@ class translator(commands.Cog):
 
     @commands.command(name = 'languageSearch', aliases = ['ls', 'searchlanguage', 'search', 'abbreviation'])
     async def languageSearch(self,ctx,*,language):
-        return await ctx.send(langDict[language.lower()])
+        if language in langDict.values():
+            return await ctx.send(list(langDict.keys())[list(langDict.values()).index(language)])
+        else:
+            return await ctx.send(langDict[language.lower()])
 
-    @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands'])
+
+    @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands', 'info', 'about'])
     async def helper(self, ctx, to_language='en'):
         help_title = '**Command Guide**\nNote: Languages must be in abbreviated form.\n'
-        help_translate = '__ Translate __\n$tl|tr [from language] [to language] [message]\n'
-        help_translatetts = '__ Text-to-Speech __\n$tltts [from language] [to language] [message]\n'
+        help_translate = '__ Translate __\n$tl|tr <source language> <target language> <message>\n'
+        help_translatetts = '__ Text-to-Speech __\n$tltts <source language> <target language> <message>\n'
         help_languageguide = '__ Language Guide __\n$lg\n'
-        help_languagesearch = '__ Language Abbrevation Search __\n$ls [language]'
-        help_message = help_title + help_translate + help_translatetts + help_languageguide + help_languagesearch
+        help_languagesearch = '__ Language Abbrevation Search __\n$ls <target language>\n'
+        help_translatemessage = '__ Translate Message by Replying__\n$tm <target language>'
+        help_message = help_title + help_translate + help_translatetts + help_languageguide + help_languagesearch + help_translatemessage
         translated_help_message = translate.google(help_message, 'en', str(to_language))
         translated_help_message = translated_help_message.lower()
         return await ctx.send(translated_help_message)
+
 
 token  = configData["token"]
 def setup(bot):
