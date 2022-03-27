@@ -7,7 +7,7 @@ import translators as translate
 import requests
 
 if os.path.exists(os.getcwd() + "/config.json"):
-    with open(".\config.json") as f:
+    with open("config.json") as f:
         configData = json.load(f)
 else:
     configTemplate = {"token": ""}
@@ -20,6 +20,18 @@ bot = commands.Bot(command_prefix='$', help_command=None)
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='$ commands'))
     print(f'{bot.user} is online!')
+
+@bot.event
+async def on_raw_reaction_add(payload):
+    if payload.emoji.name == '📥':
+        channel = bot.get_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        url = message.jump_url
+        message = message.content
+        translated_message = translate.google(message)
+        embed = discord.Embed(title='English translation', description=translated_message)
+        embed.add_field(name='original message',value=message + '\n' + url)
+        await channel.send(embed=embed)
 
 
 class translator(commands.Cog):
@@ -73,16 +85,16 @@ class translator(commands.Cog):
         else:
             return await ctx.send(langDict[language.lower()])
 
-
     @commands.command(name = 'help', aliases = ['h', '?', 'Help', 'HELP', 'guide', 'commands', 'info', 'about'])
     async def helper(self, ctx, to_language='en'):
         help_title = '** Command Guide **\n Note: Languages must be in abbreviated form.\n'
-        help_translate = '__ Translate __\n$[tl|tr] <source language> <target language> <message>\n'
-        help_translatetts = '__ Text-to-Speech __\n$tltts <source language> <target language> <message>\n'
-        help_languageguide = '__ Language Guide __\n$lg\n'
-        help_languagesearch = '__ Language Abbrevation Search __\n$ls <target language>\n'
-        help_translatemessage = '__ Translate Message by Replying__\n$tm <target language>'
-        help_message = help_title + help_translate + help_translatetts + help_languageguide + help_languagesearch + help_translatemessage
+        help_tl = '__ Translate __\n$[tl|tr] <source language> <target language> <message>\n'
+        help_tltts = '__ Text-to-Speech __\n$tltts <source language> <target language> <message>\n'
+        help_lg = '__ Language Guide __\n$lg\n'
+        help_ls = '__ Language Abbrevation Search __\n$ls <target language>\n'
+        help_tm = '__ Translate Message by Replying__\n$tm <target language>\n'
+        help_react = '__Translate to English by Message Reaction__ \n react to message with 📥'
+        help_message = help_title + help_tl + help_tltts + help_lg + help_ls+ help_tm + help_react
         translated_help_message = translate.google(help_message, 'en', str(to_language))
         translated_help_message = translated_help_message.lower()
         lines = translated_help_message.splitlines()
