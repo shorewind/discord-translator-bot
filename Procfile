@@ -1,1 +1,1 @@
-worker nTPTB.py
+worker: nTPTB.py
