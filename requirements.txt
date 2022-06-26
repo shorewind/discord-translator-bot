@@ -1,5 +1,0 @@
-discord.py==1.7.3
-requests==2.27.1
-translate_api==4.9.5
-translators==5.0.2
-nltk==3.6.7

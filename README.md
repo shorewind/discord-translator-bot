@@ -1,7 +1,7 @@
 # Not the Popular Translator Bot
 A translator Discord translator bot created for the UAH ACM Hackathon 2022. <br/>
 
-Packages used: discord, json, os, nltk, translators <br/>
+Packages used: discord, json, os, translators <br/>
 
 ### Features <br/>
 note: languages must be in abbreviated form.<br/>
